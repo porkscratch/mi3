@@ -95,7 +95,8 @@ eigen(a,r,n) ;
 //vectors(form) ;
 
 
-form.Out.value += " Moments of Inertia\n" ;
+form.Out.value += "___________________________________________\n Moments of Inertia\n" ;
+form.Out.value += "___________________________________________\n \n";
 for ( i=1 ; i<4 ; i++ ) {
 if ( i == 1 ) str = "Ic" ;
 if ( i == 2 ) str = "Ib" ;
@@ -111,12 +112,23 @@ form.Out.value += "___________________________________________\n \n";
 form.Out.value += "Paa = "+trunc((Inertia[2]+Inertia[1]-Inertia[3])/2,9)+" amu Å2\n";
 form.Out.value += "Pbb = "+trunc((Inertia[1]+Inertia[3]-Inertia[2])/2,9)+" amu Å2\n";
 form.Out.value += "Pcc = "+trunc((Inertia[3]+Inertia[2]-Inertia[1])/2,9)+" amu Å2\n";
+
+form.Out.value += "___________________________________________\n Inertial Defect\n" ;
+form.Out.value += "___________________________________________\n \n";  
+form.Out.value += "Ic-Ia-Ib = "+trunc(Inertia[1]-Inertia[3]-Inertia[2],9)+" amu Å2\n";
+
+Ae = 505379.005/Inertia[3];
+Be = 505379.005/Inertia[2];
+Ce = 505379.005/Inertia[1];
+  
   
 form.Out.value += "___________________________________________\n Rotational constants\n" ;
 form.Out.value += "___________________________________________\n \n";
-form.Out.value += "A = "+trunc(505379.06/Inertia[3],9)+" MHz\n";
-form.Out.value += "B = "+trunc(505379.06/Inertia[2],9)+" MHz\n";
-form.Out.value += "C = "+trunc(505379.06/Inertia[1],9)+" MHz\n";
+form.Out.value += "A = "+trunc(505379.005/Inertia[3],9)+" MHz\n";
+form.Out.value += "B = "+trunc(505379.005/Inertia[2],9)+" MHz\n";
+form.Out.value += "C = "+trunc(505379.004/Inertia[1],9)+" MHz\n \n";
+  
+form.Out.value += "Ray's = "+trunc(((2*Be)-Ae-Ce)/(Ae-Ce),6)+" amu Å2\n";
 
   
   
