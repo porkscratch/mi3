@@ -107,9 +107,9 @@ form.Out.value += ISI+"e-45 kg m2\n" ;
 }
 
 form.Out.value += "___________________________________________\n Rotational constants\n" ;
-Ae = getBe(form,Inertia[3],"T") ;
+Ae = getBe(form,Inertia[1],"T") ;
 Be = getBe(form,Inertia[2],"T") ;
-Ce = getBe(form,Inertia[1],"T") ;
+Ce = getBe(form,Inertia[3],"T") ;
 lstart = 1 ; lend = 4 ;
 if ( (Ce<0.001)||(isNaN(Ce)) ) { lstart = 2 ; lend = 3 } ; // catch linear molecules
 for ( i=lstart ; i<lend ; i++ ) {
