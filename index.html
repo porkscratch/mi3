@@ -116,7 +116,7 @@ for ( i=lstart ; i<lend ; i++ ) {
 if ( i == 3 ) str = "A" ;
 if ( i == 2 ) str = "B" ;
 if ( i == 1 ) str = "C" ;
-form.Out.value += str+" = "+trunc(getBe(form,Inertia[i],"G"),9)+" GHz\n" ;
+form.Out.value += str+" = "+trunc(getBe(form,Inertia[i],"M"),9)+" MHz\n" ;
 }
 
 pcs() ; // rotate to principal coordinates frame
@@ -171,7 +171,7 @@ var str = "" ;
 if ( Inert>0.001 ) {
 Inert = Inert/NA/1000*1e-20 ;
 var Be = h/8/pi/pi/Inert/clight/100 ; // cm-1
-if ( units == "G" ) Be = Be*clight*100*1e-9 ;
+if ( units == "M" ) Be = Be*clight*100*1e-6 ;
 if ( units == "T" ) Be = Be = h2ok/8/pi/pi/Inert ; // K
 }
 return Be
