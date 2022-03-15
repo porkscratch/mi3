@@ -92,7 +92,7 @@ form.Out.value = "" ;
 moment() ;
 
 eigen(a,r,n) ;
-//vectors(form) ;
+vectors(form) ;
 
   
 
@@ -229,7 +229,7 @@ anorm=anorm+a[ia]*a[ia] ;
 } ; // end for j
 } ; // end for i
 if ( anorm > 0 ) {
-anorm=1.414* Math.sqrt(anorm) ;
+anorm=1.414213562* Math.sqrt(anorm) ;
 anrmx=anorm*range/n ;
 
 // initialize indicators and compute threshold,thr ;
@@ -238,7 +238,7 @@ thr=anorm ;
 // compare threshold with final norm ;
 while ( thr > anrmx ) {
 thr=thr/n ;
-for ( pass=0 ; pass<1000 ; pass++ ) {
+for ( pass=0 ; pass<10000 ; pass++ ) {
 l=1 ;
 // test for l=second from last column ;
 while ( l <= (n-1) ) {
