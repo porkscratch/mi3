@@ -113,10 +113,10 @@ Ce = getBe(form,Inertia[3],"T") ;
 lstart = 1 ; lend = 4 ;
 if ( (Ce<0.001)||(isNaN(Ce)) ) { lstart = 2 ; lend = 3 } ; // catch linear molecules
 for ( i=lstart ; i<lend ; i++ ) {
-if ( i == 1 ) str = "C" ;
+if ( i == 3 ) str = "C" ;
 if ( i == 2 ) str = "B" ;
-if ( i == 3 ) str = "A" ;
-form.Out.value += str+" = "+trunc(getBe(form,Inertia[i],"M"),9)+" MHz\n" ;
+if ( i == 1 ) str = "A" ;
+form.Out.value += str+" = "+trunc(getBe(form,Inertia[4-i],"M"),9)+" MHz\n" ;
 }
 
 pcs() ; // rotate to principal coordinates frame
@@ -714,7 +714,7 @@ of a polyatomic molecule.
 Molecule atoms and coordinates in XYZ format.  Use "C13" for a carbon-13:<BR>
 <TEXTAREA NAME=XYZ ROWS=24 COLS=60>
 5
-Molecule name/Comment
+Molecule/Comment
 Cl 1.4517584 0.0000000 0.8255542
 C 0.0000000 0.0000000 -0.1359213
 Cl -1.4517584 0.0000000 0.8255542
