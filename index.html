@@ -113,9 +113,8 @@ form.Out.value += "Paa = "+trunc((Inertia[2]+Inertia[1]-Inertia[3])/2,9)+" amu �
 form.Out.value += "Pbb = "+trunc((Inertia[1]+Inertia[3]-Inertia[2])/2,9)+" amu Å2\n";
 form.Out.value += "Pcc = "+trunc((Inertia[3]+Inertia[2]-Inertia[1])/2,9)+" amu Å2\n";
 
-form.Out.value += "___________________________________________\n Inertial Defect\n" ;
-form.Out.value += "___________________________________________\n \n";  
-form.Out.value += "Ic-Ia-Ib = "+trunc(Inertia[1]-Inertia[3]-Inertia[2],9)+" amu Å2\n";
+form.Out.value += "\n";  
+form.Out.value += "Inertial defect, Ic-Ia-Ib = "+trunc(Inertia[1]-Inertia[3]-Inertia[2],9)+" amu Å2\n";
 
 Ae = 505379.005/Inertia[3];
 Be = 505379.005/Inertia[2];
@@ -128,9 +127,10 @@ form.Out.value += "A = "+trunc(505379.005/Inertia[3],9)+" MHz\n";
 form.Out.value += "B = "+trunc(505379.005/Inertia[2],9)+" MHz\n";
 form.Out.value += "C = "+trunc(505379.004/Inertia[1],9)+" MHz\n \n";
   
-form.Out.value += "Ray's = "+trunc(((2*Be)-Ae-Ce)/(Ae-Ce),6)+" amu Å2\n";
+form.Out.value += "Ray's Asymmetry Parameter = "+trunc(((2*Be)-Ae-Ce)/(Ae-Ce),6)+"\n";
 
-  
+form.Out.value += "B+C = "+trunc(Be+Ce,9)+" MHz\n";  
+form.Out.value += "B-C = "+trunc(Be-Ce,9)+" MHz\n";  
   
   
 pcs() ; // rotate to principal coordinates frame
