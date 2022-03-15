@@ -97,9 +97,9 @@ eigen(a,r,n) ;
 //form.Out.value += "___________________________________________\n" ;
 form.Out.value += " Moments of Inertia\n" ;
 for ( i=1 ; i<4 ; i++ ) {
-if ( i == 1 ) str = "Ix" ;
-if ( i == 2 ) str = "Iy" ;
-if ( i == 3 ) str = "Iz" ;
+if ( i == 1 ) str = "Ic" ;
+if ( i == 2 ) str = "Ib" ;
+if ( i == 3 ) str = "Ia" ;
 Inertia[i] = a[i+(i*i-i)/2] ;
 form.Out.value += str+" = ";
 ISI = trunc(Inertia[i],9) ;
