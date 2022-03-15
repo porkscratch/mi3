@@ -170,10 +170,10 @@ function getBe(form,Inert,units) {
 var str = "" ;
 if ( Inert>0.001 ) {
 //Inert = Inert/NA/1000*1e-20 ;
-//var Be = h/8/pi/pi/Inert/clight/100 ; // cm-1
-var Be = 505379.07/Inert ; // cm-1
-//if ( units == "M" ) Be = Be*clight*100*1e-6 ;
-if ( units == "M" ) Be = Be;
+var Be = h/8/pi/pi/Inert/clight/100 ; // cm-1
+//var Be = 505379.07/Inert ; // cm-1
+if ( units == "M" ) Be = Be*clight*100*1e-6 ;
+//if ( units == "M" ) Be = Be;
 if ( units == "T" ) Be = Be = h2ok/8/pi/pi/Inert ; // K
 }
 return Be
