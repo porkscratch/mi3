@@ -134,7 +134,7 @@ form.Out.value += "Pbb = "+trunc((Inertia[1]+Inertia[3]-Inertia[2])/2,9)+" amu �
 form.Out.value += "Pcc = "+trunc((Inertia[3]+Inertia[2]-Inertia[1])/2,9)+" amu Å2\n";
 
 form.Out.value += "\n";  
-form.Out.value += "Inertial defect, Ic-Ia-Ib = "+trunc(Inertia[1]-Inertia[3]-Inertia[2],9)+" amu Å2\n";
+form.Out.value += "Inertial defect, Ic-Ia-Ib = "+trunc(Inertia[1]-Inertia[3]-Inertia[2],9)+" amu Å2\n \n";
 
 
   
@@ -145,11 +145,12 @@ form.Out.value += "=============================================\n" ;
 form.Out.value += "\n Coordinates in Principal Coordinates Frame\n" ;
 form.Out.value += "___________________________________________\n" ;
 var frmt = "####.####" ;
-form.Out.value += natm+"\n" ;
 form.Out.value += comment+" in pcf\n" ;
+form.Out.value += natm+"\n" ;
+
 for (i=0 ; i<natm ; i++ ) {
 str = ( ele[i].length == 1 ) ? ele[i]+" " : ele[i] ;
-form.Out.value += str+" "+fmt(x[i],frmt)+" "+fmt(y[i],frmt)+" "+fmt(z[i],frmt)+"\n" ;}
+form.Out.value += str+" "+fmt(x[i],frmt)+" "+fmt(y[i],frmt)+" "+fmt(z[i],frmt)+" "+fmt(m[i],frmt)+"\n" ;}
 
 } ; // end fcn getinput
 
