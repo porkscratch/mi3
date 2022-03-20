@@ -3,7 +3,33 @@
 <TITLE>Rotational Constants</TITLE>
 <META content="Rotational Constant Calculator" name=description>
 </HEAD>
+
+
+<script src="https://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>
+<div id="container-01" class="mol-container" style="position:absolute; top:250; left:700; z-index:3"></div>
+<style>
+.mol-container {
+  width: 30%;
+  height: 400px;
+  position: relative;
+}
+</style>
+<script>
+$(function() {
+  let element = $('#container-01');
+  let config = { backgroundColor: 'white' };
+  let viewer = $3Dmol.createViewer( element, config );
+  viewer.addSphere({ center: {x:0, y:0, z:0}, radius: 10.0, color: 'green' });
+  viewer.zoomTo();
+  viewer.render();
+  viewer.zoom(0.8, 2000);
+});
+</script>
+
+
 <SCRIPT language="JavaScript">
+
+
 var flag = true ;
 var a = new Array() ; // matrix to diagonalize starting at i=1
 var r = new Array() ;
@@ -13,12 +39,133 @@ var y = new Array() ;
 var z = new Array() ;
 var ele = new Array() ;
 var m = new Array() ;
-var Names = new Array("H","D","Li","B","C","C13","N","O","F","P","S","Cl","K","Ca",
-"Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Br","I") ;
-var mass = new Array(1.00782519,2.0140,7.0160,11.0093,12.0,13.0033548378,14.0031,15.9949150,18.99840322,30.9738,
-31.9721,34.9688,38.9637,39.9626,44.9559,47.9479,50.944,51.9405,54.9380,55.9349,
-58.9332,57.9353,62.9296,63.9291,68.9256,73.9211,74.9216,78.9183,126.9045) ;
-var nnames = 28 ;
+var ac = new Array() ;
+var ar = new Array() ;
+var Names = new Array(
+"H",
+"D",
+"Li",
+"B",
+"C",
+"C13",
+"N",
+"O",
+"F",
+"Si",
+"P",
+"S",
+"Cl",
+"K",
+"Ca",
+"Sc",
+"Ti",
+"V",
+"Cr",
+"Mn",
+"Fe",
+"Co",
+"Ni",
+"Cu",
+"Zn",
+"Ga",
+"Ge",
+"As",
+"Br",
+"I") ;
+var atrad = new Array(
+0.32,
+0.32,
+1.33,
+0.85,
+0.75,
+0.75,
+0.71,
+0.63,
+0.64,
+1.16,
+1.11,
+1.03,
+0.99,
+1.96,
+1.71,
+1.48,
+1.36,
+1.34,
+1.22,
+1.19,
+1.16,
+1.11,
+1.10,
+1.12,
+1.18,
+1.24,
+1.21,
+1.21,
+1.14,
+1.33) ;
+var atcol = new Array(
+"white",
+"white",
+"grey",
+"grey",
+"black",
+"black",
+"blue",
+"red",
+"green",
+"grey",
+"orange",
+"yellow",
+"green",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"grey",
+"brown",
+"purple") ;
+var mass = new Array(
+1.00782519,
+2.0140,
+7.0160,
+11.0093,
+12.0,
+13.0033548378,
+14.0031,
+15.9949150,
+18.99840322,
+27.97692653465,
+30.9738,
+31.9721,
+34.9688,
+38.9637,
+39.9626,
+44.9559,
+47.9479,
+50.944,
+51.9405,
+54.9380,
+55.9349,
+58.9332,
+57.9353,
+62.9296,
+63.9291,
+68.9256,
+73.9211,
+74.9216,
+78.9183,
+126.9045) ;
+var nnames = 30 ;
 // fundmental constants
 var h = 6.62608E-34 ;
 var h2ok = 3.18002e-44 ; // h^2/k
@@ -80,6 +227,8 @@ z[i] = parseFloat(instr[2]) }
 
 for (j=0 ; j<nnames ; j++ ) { if ( ele[i]==Names[j] ) break ; }
 if ( j == nnames ) { alert("Unknown element "+ele[i]) ; return }
+ac[i] = atcol[j] ;
+ar[i] = atrad[j] ;
 m[i] = mass[j] ;
 MM += m[i] ;
 } ; // end for i
@@ -153,6 +302,7 @@ str = ( ele[i].length == 1 ) ? ele[i]+" " : ele[i] ;
 form.Out.value += str+" "+fmt(z[i],frmt)+" "+fmt(y[i],frmt)+" "+fmt(x[i],frmt)+" "+fmt(m[i],frmt)+"\n" ;}
 
 } ; // end fcn getinput
+
 
 function moment() {
 // calculate the moment of inertia matrix
@@ -372,7 +522,96 @@ c = ( Math.abs(c)<1e-13) ? 0 : c ;
 return c
 }
 
+function checkbdr(i,j) {
+var bdyn = 0;
+var radlen = ar[i]+ar[j];
+var bdlen = Math.pow(z[j]-z[i],2);
+bdlen = bdlen + Math.pow(y[j]-y[i],2);
+bdlen = bdlen + Math.pow(x[j]-x[i],2);
+bdlen = Math.pow(bdlen,0.5);
+if (bdlen < radlen*1.07) {
+bdyn = 1;
+}
+return bdyn
+};
+
+function draw() {
+  let element = $('#container-01');
+  let config = { backgroundColor: 'white' };
+  let viewer = $3Dmol.createViewer( element, config );
+for (i=0 ; i<natm ; i++ ) {
+  viewer.addSphere({ center: {x:z[i], y:y[i], z:x[i]}, radius: 0.5*ar[i], color: ac[i] });
+};
+
+for (i = 0 ; i<natm ; i++) {
+for (j = 0 ; j<natm ; j++) {
+
+ var bdr = checkbdr(i,j)
+ if (bdr == 1) {
+
+ viewer.addCylinder({start:{x:z[i],y:y[i],z:x[i]},
+                       end:{x:z[j],y:y[j],z:x[j]},
+                    radius:0.05,
+                    color:'grey'});
+ }
+
+}; // end for i
+}; // end for j
+
+  var maxz = 1.5*Math.max(...z);
+  var minz = 1.5*Math.min(...z);
+  var maxy = 1.5*Math.max(...y);
+  var miny = 1.5*Math.min(...y);
+  var maxx = 1.5*Math.max(...x);
+  var minx = 1.5*Math.min(...x);
+
+  viewer.addArrow({
+                      start: {x:minz, y:0.0, z:0.0},
+                      end: {x:maxz, y:0.0, z:0.0},
+                      radius: 0.025,
+                      radiusRatio:2.6,
+                      mid:0.9,
+                      color:'silver'});
+
+ viewer.addArrow({
+                      start: {x:0.0, y:miny, z:0.0},
+                      end: {x:0.0, y:maxy, z:0.0},
+                      radius: 0.025,
+                      radiusRatio:2.6,
+                      mid:0.9,
+                      color:'silver'});
+  viewer.addArrow({
+                      start: {x:0.0, y:0.0, z:minx},
+                      end: {x:0.0, y:0.0, z:maxx},
+                      radius: 0.025,
+                      radiusRatio:2.6,
+                      mid:0.9,
+                      color:'silver'});
+
+ viewer.addLabel("a",{font:'sans-serif',fontSize:14,fontColor:'white',fontOpacity:1,borderThickness:1.0,
+                                           borderColor:'red',borderOpacity:0.5,backgroundColor:'black',backgroundOpacity:0.5,
+                                           position:{x:maxz,y:0.0,z:0.0},inFront:true,showBackground:true});
+
+ viewer.addLabel("b",{font:'sans-serif',fontSize:14,fontColor:'white',fontOpacity:1,borderThickness:1.0,
+                                           borderColor:'red',borderOpacity:0.5,backgroundColor:'black',backgroundOpacity:0.5,
+                                           position:{x:0.0,y:maxy,z:0.0},inFront:true,showBackground:true});
+
+ viewer.addLabel("c",{font:'sans-serif',fontSize:14,fontColor:'white',fontOpacity:1,borderThickness:1.0,
+                                           borderColor:'red',borderOpacity:0.5,backgroundColor:'black',backgroundOpacity:0.5,
+                                           position:{x:0.0,y:0.0,z:maxx},inFront:true,showBackground:true});
+
+  
+
+ viewer.zoomTo();
+  viewer.render();
+  viewer.zoom(0.8, 2000);
+}
+
+
+
 </SCRIPT>
+
+
 <BODY BGCOLOR="#E0FFFF">
 <FONT SIZE=7 COLOR=blue FACE=sans-serif><B><sup>A</sup></B></FONT>
 <FONT SIZE=6 COLOR=orange FACE='monospace,courier'><I><B>B</B></I></FONT>
@@ -406,6 +645,7 @@ Molecule atoms and coordinates in XYZ format.  Use "C13" for a carbon-13:<BR>
 </TEXTAREA>
 <INPUT TYPE=BUTTON VALUE="Run" onClick="getinput(this.form);">
 <INPUT TYPE=RESET VALUE="Reset">
+<INPUT TYPE=BUTTON VALUE="Draw" onClick="draw();">
 <BR>
 <TEXTAREA NAME=Out ROWS=24 COLS=60></TEXTAREA>
 </FORM>
