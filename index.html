@@ -4,8 +4,11 @@
 <META content="Rotational Constant Calculator" name=description>
 </HEAD>
 
-
 <script src="https://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+
 <div id="container-01" class="mol-container" style="position:absolute; top:250; left:700; z-index:3"></div>
 <style>
 .mol-container {
@@ -239,6 +242,10 @@ form.Out.value = "" ;
 //form.Out.value += ele[i]+" "+m[i]+" "+x[i]+" "+y[i]+" "+z[i]+"\n" ;}
 
 moment() ;
+
+//form.Out.value += a[1]+" "+a[2]+" "+a[3]+"\n";
+//form.Out.value += a[4]+" "+a[5]+" "+a[6];
+//form.Out.value += "" ;
 
 eigen(a,r,n) ;
 //vectors(form) ;
@@ -608,8 +615,42 @@ for (j = 0 ; j<natm ; j++) {
 }
 
 
+function download(form){
+
+    var text = form.Out.value;
+    text = text.replace(/\n/g, "\r\n"); // To retain the Line breaks.
+    var textFileAsBlob = new Blob([text], { type: "text/plain"});
+    var fileNameToSaveAs = "data.txt"; //filename.extension
+    var downloadLink = document.createElement("a");
+  downloadLink.download = fileNameToSaveAs;
+  downloadLink.innerHTML = "Download File";
+  if (window.webkitURL != null) {
+    // Chrome allows the link to be clicked without actually adding it to the DOM.
+    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+  } else {
+    // Firefox requires the link to be added to the DOM before it can be clicked.
+    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+  }
+
+  downloadLink.click();
+}
+
+
+ function takeScreenShot() { 
+       let CaptureDiv = 
+                document.getElementById('container-01'); 
+                html2canvas(CaptureDiv).then( 
+                function (canvas) { 
+                    saveAs(canvas.toDataURL(), 'image.png'); 
+                }); 
+} 
+
 
 </SCRIPT>
+
 
 
 <BODY BGCOLOR="#E0FFFF">
@@ -620,6 +661,7 @@ for (j = 0 ; j<natm ; j++) {
 <BR>
 Calculates the Rotational Constants, Principal Moments of Inertia and related quantites
 of a polyatomic molecule.
+
 <FORM NAME=ins>
 Molecule atoms and coordinates in XYZ format.  Use "C13" for a carbon-13:<BR>
 <TEXTAREA NAME=XYZ ROWS=24 COLS=60>
@@ -647,11 +689,12 @@ Molecule atoms and coordinates in XYZ format.  Use "C13" for a carbon-13:<BR>
 <INPUT TYPE=RESET VALUE="Reset">
 <INPUT TYPE=BUTTON VALUE="Draw" onClick="draw();">
 <BR>
-<TEXTAREA NAME=Out ROWS=24 COLS=60></TEXTAREA>
+<TEXTAREA NAME=Out ROWS=24 COLS=60 class="form-control"></TEXTAREA>
+<INPUT TYPE=BUTTON VALUE="Save" onClick="download(form);">
+<INPUT TYPE=BUTTON VALUE="Save Image" onclick="takeScreenShot()"> 
 </FORM>
 <P>
 <FONT COLOR=brown><I>
 Colby College Chemistry, T. W. Shattuck, 6/28/2011 <br>
-Purchase College Chemistry, S. A. Cooke, 3/14/2022</I></FONT>
-</BODY>
+Purchase College Chemistry, S. A. Cooke, 3/14/2022</I></FONT> 
 </HTML>
