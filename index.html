@@ -35,6 +35,7 @@ $(function() {
 
 var flag = true ;
 var a = new Array() ; // matrix to diagonalize starting at i=1
+var ina = new Array() ; 
 var r = new Array() ;
 var n = 3 ; // order of matrix
 var x = new Array() ;
@@ -243,6 +244,13 @@ form.Out.value = "" ;
 
 moment() ;
 
+ina[1] = a[1] ;
+ina[2] = a[2] ;
+ina[3] = a[3] ;
+ina[4] = a[4] ;
+ina[5] = a[5] ;
+ina[6] = a[6] ;
+
 //form.Out.value += a[1]+" "+a[2]+" "+a[3]+"\n";
 //form.Out.value += a[4]+" "+a[5]+" "+a[6];
 //form.Out.value += "" ;
@@ -275,7 +283,7 @@ form.Out.value += "Ray's Asymmetry Parameter = "+trunc(((2*Be)-Ae-Ce)/(Ae-Ce),6)
 form.Out.value += "B+C = "+trunc(Be+Ce,9)+" MHz\n";  
 form.Out.value += "B-C = "+trunc(Be-Ce,9)+" MHz\n";  
     
-form.Out.value += "___________________________________________\n Moments of Inertia\n" ;
+form.Out.value += "___________________________________________\n Principal Moments of Inertia\n" ;
 form.Out.value += "___________________________________________\n \n";
 form.Out.value += "Ia = "+trunc(Inertia[3],9)+" amu Å2\n";
 form.Out.value += "Ib = "+trunc(Inertia[2],9)+" amu Å2\n";
@@ -292,15 +300,22 @@ form.Out.value += "Pcc = "+trunc((Inertia[3]+Inertia[2]-Inertia[1])/2,9)+" amu �
 form.Out.value += "\n";  
 form.Out.value += "Inertial defect, Ic-Ia-Ib = "+trunc(Inertia[1]-Inertia[3]-Inertia[2],9)+" amu Å2\n \n";
 
+form.Out.value += "___________________________________________\n Input MOI Tensor (for troubleshooting)\n" ;
+form.Out.value += "___________________________________________\n \n";
 
+var frmt = "####.####" ;
+
+form.Out.value += fmt(ina[1],frmt)+" "+fmt(ina[2],frmt)+" "+fmt(ina[4],frmt)+"\n"
+form.Out.value += fmt(ina[2],frmt)+" "+fmt(ina[3],frmt)+" "+fmt(ina[5],frmt)+"\n"
+form.Out.value += fmt(ina[4],frmt)+" "+fmt(ina[5],frmt)+" "+fmt(ina[6],frmt)+"\n"
   
 pcs() ; // rotate to principal coordinates frame
 
-
-form.Out.value += "=============================================\n" ;
-form.Out.value += "\n Coordinates in Principal Coordinates Frame\n" ;
+form.Out.value += "\n"; 
 form.Out.value += "___________________________________________\n" ;
-var frmt = "####.####" ;
+form.Out.value += "Coordinates in Principal Coordinates Frame\n" ;
+form.Out.value += "___________________________________________\n" ;
+
 form.Out.value += comment+" in pcf\n" ;
 form.Out.value += natm+"\n" ;
 
